@@ -1,0 +1,5 @@
+pythia8->readString("DireTimes:kernelOrder = -1"); 
+pythia8->readString("DireColorQCD:CA = 4./3."); 
+pythia8->readString("DireColorQCD:CF = 3."); 
+
+TimeShower:alphaSorder     = 0; #turns off the running of alpha_s
