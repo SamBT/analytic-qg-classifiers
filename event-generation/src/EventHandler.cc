@@ -56,7 +56,7 @@ void EventHandler::AnalyzeEvent(int iEvt, Pythia8::Pythia pyth) {
     p.set_user_index(id);
 
     if (part.isFinal()) {
-      particlesForJets.push_back(p)
+      particlesForJets.push_back(p);
     }
     else {
       partonsForJets.push_back(p);
