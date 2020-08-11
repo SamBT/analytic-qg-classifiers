@@ -52,7 +52,7 @@ void EventHandler::AnalyzeEvent(int iEvt, Pythia8::Pythia pyth) {
     if (!part.isFinal() && !part.isFinalPartonLevel()) continue;
     if (idAbs == 12 || idAbs == 14 || idAbs == 16) continue;
 
-    fastjet::PseudoJet p(part.px(), part.py(), part.pz(), part.e())
+    fastjet::PseudoJet p(part.px(), part.py(), part.pz(), part.e());
     p.set_user_index(id);
 
     if (part.isFinal()) {
