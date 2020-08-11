@@ -1,5 +1,5 @@
-#ifndef  EventHandler_H
-#define  EventHandler_H
+#ifndef EventHandler_H
+#define EventHandler_H
 
 #include <vector>
 #include <math.h>
@@ -38,7 +38,7 @@ class EventHandler {
     int EventNumber;
 
     //Jet variables
-    int max_njets = 20;
+    static const int max_njets = 20;
     double pTmin = 20;
     double jet_radius;
 
@@ -118,6 +118,6 @@ class EventHandler {
     void SetOutName(string fname){
       outName = fname;
     }
+};
 
-
-}
+#endif
