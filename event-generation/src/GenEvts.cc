@@ -26,7 +26,7 @@ using std::endl;
 
 int main( int argc, char* argv[] ) {
 
-  string config;
+  char config;
   int nev = 1000;
   double CF = 1.33333;
   double CA = 3.00000;
@@ -69,6 +69,6 @@ int main( int argc, char* argv[] ) {
     Analysis.AnalyzeEvent(iev,pythia)
   }
   Analysis.End();
-  
+
   return 0;
 }
