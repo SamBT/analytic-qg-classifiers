@@ -58,7 +58,7 @@ int main( int argc, char* argv[] ) {
   // initialize Dire
   dire.init(pythia, argv[1]);
 
-  pythia.init(); //necessary?
+  //pythia.init(); //necessary?
 
   // Loop to generate events
   Analysis.Begin();
