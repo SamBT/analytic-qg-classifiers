@@ -1,16 +1,5 @@
 #include "EventHandler.h"
 
-#include "TFile.h"
-#include "TTree.h"
-#include "TClonesArray.h"
-#include "TParticle.h"
-#include "TH1.h"
-#include "TH1F.h"
-#include "TCanvas.h"
-#include "TMath.h"
-#include "TVector3.h"
-#include "TRandom3.h"
-
 //Constructor
 EventHandler::EventHandler(double radius = 0.4, double min_pt = 20) {
   outName = "test.root";
