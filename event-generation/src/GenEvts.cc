@@ -66,7 +66,7 @@ int main( int argc, char* argv[] ) {
     // print a status update every 100 events
     if (iev % 100 == 0) cout << "Generated " << iev << " events." << endl;
 
-    Analysis.AnalyzeEvent(iev,&pythia);
+    Analysis.AnalyzeEvent(iev,pythia);
   }
   Analysis.End();
 

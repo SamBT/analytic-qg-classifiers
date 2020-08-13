@@ -109,7 +109,7 @@ class EventHandler {
     EventHandler (double radius, double min_pt);
     ~EventHandler ();
     void Begin();
-    void AnalyzeEvent(int iEvt, Pythia8::Pythia pyth);
+    void AnalyzeEvent(int iEvt, Pythia8::Pythia& pyth);
     int JetType(fastjet::PseudoJet jet, vector<fastjet::PseudoJet> partons, bool isPartonJet);
     void End();
     void DeclareBranches();
