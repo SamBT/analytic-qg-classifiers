@@ -44,7 +44,7 @@ int main( int argc, char* argv[] ) {
   // initialize Pythia and Dire
   Pythia pythia;
   Dire dire;
-  EventHandler Analysis();
+  EventHandler Analysis(0.4,20);
 
   //Pythia settings not covered in DIRE config file
   //pythia.readString("Main:numberOfEvents = "+argv[2])
