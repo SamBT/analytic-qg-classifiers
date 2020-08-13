@@ -33,8 +33,8 @@ void EventHandler::End() {
   return;
 }
 
-void EventHandler::AnalyzeEvent(int iEvt, Pythia8::Pythia pyth) {
-  if (!pyth.next()) return;
+void EventHandler::AnalyzeEvent(int iEvt, Pythia8::Pythia *pyth) {
+  if (!pyth->next()) return;
 
   ResetBranches();
 
@@ -43,8 +43,8 @@ void EventHandler::AnalyzeEvent(int iEvt, Pythia8::Pythia pyth) {
   vector<fastjet::PseudoJet> partonsForJets; //parton list for "truth"/parton jets
 
   //Loop over particles in event and store the final state particles and final (pre-hadronization) state partons
-  for (int i = 0; i < pyth.event.size(); i++) {
-    Pythia8::Particle part = pyth.event[i];
+  for (int i = 0; i < pyth->event->size(); i++) {
+    Pythia8::Particle part = pyth->event[i];
     int id = part.id();
     int idAbs = part.idAbs();
 

@@ -42,18 +42,18 @@ int main( int argc, char* argv[] ) {
   }
 
   // initialize Pythia and Dire
-  Pythia pythia;
+  Pythia *pythia = new Pythia();
   Dire dire;
   EventHandler Analysis(0.4,20);
 
   //Pythia settings not covered in DIRE config file
   //pythia.readString("Main:numberOfEvents = "+argv[2])
   // no substructure in e+e- beams
-  pythia.readString("PDF:lepton = off");
+  pythia->readString("PDF:lepton = off");
   // set the quark casimir value
-  pythia.settings.parm("DireColorQCD:CF", CF);
+  pythia->settings->parm("DireColorQCD:CF", CF);
   // set the gluon casimir value
-  pythia.settings.parm("DireColorQCD:CA", CA);
+  pythia->settings->parm("DireColorQCD:CA", CA);
 
   // initialize Dire
   dire.init(pythia, argv[1]);
