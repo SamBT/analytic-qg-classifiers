@@ -27,7 +27,6 @@ using std::endl;
 
 int main( int argc, char* argv[] ) {
 
-  char config;
   int nev = 1000;
   double CF = 1.33333;
   double CA = 3.00000;
