@@ -17,6 +17,7 @@
 
 #include "Pythia8/Pythia.h"
 #include "Dire/Dire.h"
+#include "EventHandler.h"
 
 using namespace Pythia8;
 using std::atoi;
@@ -36,9 +37,8 @@ int main( int argc, char* argv[] ) {
   }
   else {
     config = argv[1];
-    nev = atoi(argv[2]);
-    CF = atof(argv[3]);
-    CA = atof(argv[4]);
+    CF = atof(argv[2]);
+    CA = atof(argv[3]);
   }
 
   // initialize Pythia and Dire
@@ -47,7 +47,7 @@ int main( int argc, char* argv[] ) {
   EventHandler Analysis;
 
   //Pythia settings not covered in DIRE config file
-  pythia.readString("Main:numberOfEvents = "+argv[2])
+  //pythia.readString("Main:numberOfEvents = "+argv[2])
   // no substructure in e+e- beams
   pythia.readString("PDF:lepton = off");
   // set the quark casimir value
@@ -56,7 +56,7 @@ int main( int argc, char* argv[] ) {
   pythia.settings.parm("DireColorQCD:CA", CA);
 
   // initialize Dire
-  dire.init(pythia, config);
+  dire.init(pythia, argv[1]);
 
   //pythia.init(); necessary?
 
