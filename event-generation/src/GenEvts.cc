@@ -36,7 +36,7 @@ int main( int argc, char* argv[] ) {
     return 0;
   }
   else {
-    config = argv[1];
+    //config = argv[1];
     CF = atof(argv[2]);
     CA = atof(argv[3]);
   }
@@ -44,7 +44,7 @@ int main( int argc, char* argv[] ) {
   // initialize Pythia and Dire
   Pythia pythia;
   Dire dire;
-  EventHandler Analysis;
+  EventHandler Analysis();
 
   //Pythia settings not covered in DIRE config file
   //pythia.readString("Main:numberOfEvents = "+argv[2])
@@ -64,9 +64,9 @@ int main( int argc, char* argv[] ) {
   Analysis.Begin();
   for (int iev = 1; iev <= nev; iev++) {
     // print a status update every 100 events
-    if (iev % 100 == 0) cout << "Generated " << iEvent << " events." << endl;
+    if (iev % 100 == 0) cout << "Generated " << iev << " events." << endl;
 
-    Analysis.AnalyzeEvent(iev,pythia)
+    Analysis.AnalyzeEvent(iev,pythia);
   }
   Analysis.End();
 
