@@ -186,8 +186,8 @@ void EventHandler::DeclareBranches() {
   T->Branch("jet_phi",&jet_phi,"jet_phi[njets]/D");
   T->Branch("jet_m",&jet_m,"jet_m[njets]/D");
   T->Branch("jet_mult",&jet_mult,"jet_mult[njets]/I");
-  T->Branch("is_qjet",&is_qjet,"is_qjet[njets]");
-  T->Branch("is_gjet",&is_gjet,"is_gjet[njets]");
+  T->Branch("is_qjet",&is_qjet,"is_qjet[njets]/O");
+  T->Branch("is_gjet",&is_gjet,"is_gjet[njets]/O");
 
   T->Branch("qjet_pt",&qjet_pt,"qjet_pt[nqjets]/D");
   T->Branch("qjet_eta",&qjet_eta,"qjet_eta[nqjets]/D");
@@ -211,8 +211,8 @@ void EventHandler::DeclareBranches() {
   T->Branch("pjet_phi",&pjet_phi,"pjet_phi[npjets]/D");
   T->Branch("pjet_m",&pjet_m,"pjet_m[npjets]/D");
   T->Branch("pjet_mult",&pjet_mult,"pjet_mult[npjets]/I");
-  T->Branch("is_pqjet",&is_pqjet,"is_pqjet[npjets]");
-  T->Branch("is_pgjet",&is_pgjet,"is_pgjet[npjets]");
+  T->Branch("is_pqjet",&is_pqjet,"is_pqjet[npjets]/O");
+  T->Branch("is_pgjet",&is_pgjet,"is_pgjet[npjets]/O");
 
   T->Branch("pqjet_pt",&pqjet_pt,"pqjet_pt[npqjets]/D");
   T->Branch("pqjet_eta",&pqjet_eta,"pqjet_eta[npqjets]/D");
