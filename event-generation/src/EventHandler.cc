@@ -33,7 +33,7 @@ void EventHandler::End() {
   return;
 }
 
-void EventHandler::AnalyzeEvent(int iEvt, Pythia8::Pythia &pyth) {
+void EventHandler::AnalyzeEvent(int iEvt, Pythia8::Pythia pyth) {
   if (!pyth.next()) return;
 
   ResetBranches();
