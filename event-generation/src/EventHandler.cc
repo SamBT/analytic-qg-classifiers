@@ -150,12 +150,18 @@ void EventHandler::AnalyzeEvent(int iEvt, Pythia8::Pythia& pyth) {
       is_pgjet[npJetsFilled] = false;
     }
     //Filling constituent info
+    vector<double> const_pt, const_eta, const_phi, const_e;
     for (int j = 0; j < partonJets[i].constituents().size(); j++) {
-      pjet_constit_pt[npJetsFilled][j] = partonJets[i].constituents()[j].pt();
-      pjet_constit_eta[npJetsFilled][j] = partonJets[i].constituents()[j].eta();
-      pjet_constit_phi[npJetsFilled][j] = partonJets[i].constituents()[j].phi();
-      pjet_constit_e[npJetsFilled][j] = partonJets[i].constituents()[j].e();
+      const_pt.push_back(partonJets[i].constituents()[j].pt());
+      const_eta.push_back(partonJets[i].constituents()[j].eta());
+      const_phi.push_back(partonJets[i].constituents()[j].phi());
+      const_e.push_back(partonJets[i].constituents()[j].e());
     }
+    pjet_constit_pt.push_back(const_pt);
+    pjet_constit_eta.push_back(const_eta);
+    pjet_constit_phi.push_back(const_phi);
+    pjet_constit_e.push_back(const_e);
+    
     npJetsFilled++;
   }
 
@@ -217,10 +223,10 @@ void EventHandler::DeclareBranches() {
   T->Branch("pjet_phi",&pjet_phi,"pjet_phi[npjets]/D");
   T->Branch("pjet_m",&pjet_m,"pjet_m[npjets]/D");
   T->Branch("pjet_mult",&pjet_mult,"pjet_mult[npjets]/I");
-  T->Branch("pjet_constit_pt",&pjet_constit_pt,"pjet_constit_pt[npjets][100]/F");
-  T->Branch("pjet_constit_eta",&pjet_constit_eta,"pjet_constit_eta[npjets][100]/F");
-  T->Branch("pjet_constit_phi",&pjet_constit_phi,"pjet_constit_phi[npjets][100]/F");
-  T->Branch("pjet_constit_e",&pjet_constit_e,"pjet_constit_e[npjets][100]/F");
+  T->Branch("pjet_constit_pt",&pjet_constit_pt);
+  T->Branch("pjet_constit_eta",&pjet_constit_eta);
+  T->Branch("pjet_constit_phi",&pjet_constit_phi);
+  T->Branch("pjet_constit_e",&pjet_constit_e);
   T->Branch("is_pqjet",&is_pqjet,"is_pqjet[npjets]/O");
   T->Branch("is_pgjet",&is_pgjet,"is_pgjet[npjets]/O");
 
