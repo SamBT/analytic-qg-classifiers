@@ -41,19 +41,22 @@ void EventHandler::AnalyzeEvent(int iEvt, Pythia8::Pythia& pyth) {
   EventNumber = iEvt;
   vector<fastjet::PseudoJet> particlesForJets; //particle list for final-state jets
   vector<fastjet::PseudoJet> partonsForJets; //parton list for "truth"/parton jets
+  vector<fastjet::PseudoJet> partonsForQGTagging; //list of all partons; for finding hardest parton in jet cone and assigning flavor
 
   //Loop over particles in event and store the final state particles and final (pre-hadronization) state partons
   for (int i = 0; i < pyth.event.size(); i++) {
     Pythia8::Particle part = pyth.event[i];
     int id = part.id();
     int idAbs = part.idAbs();
+    fastjet::PseudoJet p(part.px(), part.py(), part.pz(), part.e());
+    p.set_user_index(id);
+
+    //Add all partons to list for later jet matching
+    if (idAbs <= 3 || idAbs == 21) partonsForQGTagging.push_back(p);
 
     //Skip non final-state particles and/or neutrinos
     if (!part.isFinal() && !part.isFinalPartonLevel()) continue;
     if (idAbs == 12 || idAbs == 14 || idAbs == 16) continue;
-
-    fastjet::PseudoJet p(part.px(), part.py(), part.pz(), part.e());
-    p.set_user_index(id);
 
     if (part.isFinal()) {
       particlesForJets.push_back(p);
@@ -62,6 +65,8 @@ void EventHandler::AnalyzeEvent(int iEvt, Pythia8::Pythia& pyth) {
       partonsForJets.push_back(p);
     }
   } //End particle loop
+
+  partonsForQGTagging = fastjet::sorted_by_E(partonsForQGTagging); //pre-sort partons for matching efficiency later
 
   //Finding regular + parton jets
   fastjet::ClusterSequence cs(particlesForJets,*m_jet_def);
@@ -78,7 +83,7 @@ void EventHandler::AnalyzeEvent(int iEvt, Pythia8::Pythia& pyth) {
     jet_phi[nJetsFilled] = Jets[i].phi();
     jet_m[nJetsFilled] = Jets[i].m();
     jet_mult[nJetsFilled] = Jets[i].constituents().size();
-    int type = JetType(Jets[i],partonsForJets,false);
+    int type = JetType(Jets[i],partonsForQGTagging);
     if (type <= 6) {
       nqjets++;
       is_qjet[nJetsFilled] = true;
@@ -117,7 +122,7 @@ void EventHandler::AnalyzeEvent(int iEvt, Pythia8::Pythia& pyth) {
     pjet_phi[npJetsFilled] = partonJets[i].phi();
     pjet_m[npJetsFilled] = partonJets[i].m();
     pjet_mult[npJetsFilled] = partonJets[i].constituents().size();
-    int type = JetType(partonJets[i],partonsForJets,true);
+    int type = JetType(partonJets[i],partonsForQGTagging);
     if (type <= 6) {
       npqjets++;
       is_pqjet[npJetsFilled] = true;
@@ -152,23 +157,17 @@ void EventHandler::AnalyzeEvent(int iEvt, Pythia8::Pythia& pyth) {
   return;
 }
 
-int EventHandler::JetType(fastjet::PseudoJet jet, vector<fastjet::PseudoJet> partons, bool isPartonJet) {
+int EventHandler::JetType(fastjet::PseudoJet jet, vector<fastjet::PseudoJet> partons) {
   //Return |PDG ID| of highest-energy parton inside jet cone; determines if the jet is quark or gluon
-  if (isPartonJet) {
-    vector<fastjet::PseudoJet> ordered_partons = fastjet::sorted_by_E(jet.constituents());
-    return abs(ordered_partons[0].user_index());
-  }
-  else {
-    double maxE = 0;
-    int id = -999;
-    for (int i = 0; i < partons.size(); i++) {
-      if (partons[i].delta_R(jet) < jet_radius && partons[i].e() > maxE) {
-        id = abs(partons[i].user_index());
-        maxE = partons[i].e();
-      }
+  //NOTE : the vector "partons" MUST BE PRE-SORTED in descending energy order!
+  int id = -999;
+  for (int i = 0; i < partons.size(); i++) {
+    if (partons[i].delta_R(jet) < jet_radius) {
+      id = abs(partons[i].user_index());
+      break;
     }
-    return id;
   }
+  return id;
 }
 
 void EventHandler::DeclareBranches() {
@@ -211,6 +210,10 @@ void EventHandler::DeclareBranches() {
   T->Branch("pjet_phi",&pjet_phi,"pjet_phi[npjets]/D");
   T->Branch("pjet_m",&pjet_m,"pjet_m[npjets]/D");
   T->Branch("pjet_mult",&pjet_mult,"pjet_mult[npjets]/I");
+  T->Branch("pjet_constit_pt",&pjet_constit_pt,"pjet_constit_pt[max_njets][100]/D");
+  T->Branch("pjet_constit_eta",&pjet_constit_eta,"pjet_constit_eta[max_njets][100]/D");
+  T->Branch("pjet_constit_phi",&pjet_constit_phi,"pjet_constit_phi[max_njets][100]/D");
+  T->Branch("pjet_constit_e",&pjet_constit_e,"pjet_constit_e[max_njets][100]/D");
   T->Branch("is_pqjet",&is_pqjet,"is_pqjet[npjets]/O");
   T->Branch("is_pgjet",&is_pgjet,"is_pgjet[npjets]/O");
 
@@ -274,6 +277,12 @@ void EventHandler::ResetBranches() {
     pjet_phi[i] = -999;
     pjet_m[i] = -999;
     pjet_mult[i] = -999;
+    for (int k = 0; k < 100; k++){
+      pjet_constit_pt[i][k] = -999;
+      pjet_constit_eta[i][k] = -999;
+      pjet_constit_phi[i][k] = -999;
+      pjet_constit_e[i][k] = -999;
+    }
     is_pqjet[i] = -999;
     is_pgjet[i] = -999;
 
