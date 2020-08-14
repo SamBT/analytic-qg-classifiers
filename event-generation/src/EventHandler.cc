@@ -149,6 +149,13 @@ void EventHandler::AnalyzeEvent(int iEvt, Pythia8::Pythia& pyth) {
       is_pqjet[npJetsFilled] = false;
       is_pgjet[npJetsFilled] = false;
     }
+    //Filling constituent info
+    for (int j = 0; j < partonJets[i].constituents().size(); j++) {
+      pjet_constit_pt[npJetsFilled][j] = partonJets[i].constituents()[j].pt();
+      pjet_constit_eta[npJetsFilled][j] = partonJets[i].constituents()[j].eta();
+      pjet_constit_phi[npJetsFilled][j] = partonJets[i].constituents()[j].phi();
+      pjet_constit_e[npJetsFilled][j] = partonJets[i].constituents()[j].e();
+    }
     npJetsFilled++;
   }
 
