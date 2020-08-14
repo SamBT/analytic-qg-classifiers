@@ -161,7 +161,7 @@ void EventHandler::AnalyzeEvent(int iEvt, Pythia8::Pythia& pyth) {
     pjet_constit_eta.push_back(const_eta);
     pjet_constit_phi.push_back(const_phi);
     pjet_constit_e.push_back(const_e);
-    
+
     npJetsFilled++;
   }
 
@@ -290,12 +290,7 @@ void EventHandler::ResetBranches() {
     pjet_phi[i] = -999;
     pjet_m[i] = -999;
     pjet_mult[i] = -999;
-    for (int k = 0; k < 100; k++){
-      pjet_constit_pt[i][k] = -999;
-      pjet_constit_eta[i][k] = -999;
-      pjet_constit_phi[i][k] = -999;
-      pjet_constit_e[i][k] = -999;
-    }
+
     is_pqjet[i] = -999;
     is_pgjet[i] = -999;
 
@@ -309,6 +304,11 @@ void EventHandler::ResetBranches() {
     pgjet_phi[i] = -999;
     pgjet_m[i] = -999;
   }
+
+  pjet_constit_pt.clear();
+  pjet_constit_eta.clear();
+  pjet_constit_phi.clear();
+  pjet_constit_e.clear();
 
   return;
 }
