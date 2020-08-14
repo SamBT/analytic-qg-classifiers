@@ -82,10 +82,10 @@ class EventHandler {
     double pjet_phi[max_njets];
     double pjet_m[max_njets];
     int pjet_mult[max_njets];
-    double pjet_constit_pt[max_njets][100];
-    double pjet_constit_eta[max_njets][100];
-    double pjet_constit_phi[max_njets][100];
-    double pjet_constit_e[max_njets][100];
+    float pjet_constit_pt[max_njets][100];
+    float pjet_constit_eta[max_njets][100];
+    float pjet_constit_phi[max_njets][100];
+    float pjet_constit_e[max_njets][100];
     bool is_pqjet[max_njets];
     bool is_pgjet[max_njets];
 
