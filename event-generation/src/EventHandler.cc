@@ -217,10 +217,10 @@ void EventHandler::DeclareBranches() {
   T->Branch("pjet_phi",&pjet_phi,"pjet_phi[npjets]/D");
   T->Branch("pjet_m",&pjet_m,"pjet_m[npjets]/D");
   T->Branch("pjet_mult",&pjet_mult,"pjet_mult[npjets]/I");
-  T->Branch("pjet_constit_pt",&pjet_constit_pt,"pjet_constit_pt[max_njets][100]/D");
-  T->Branch("pjet_constit_eta",&pjet_constit_eta,"pjet_constit_eta[max_njets][100]/D");
-  T->Branch("pjet_constit_phi",&pjet_constit_phi,"pjet_constit_phi[max_njets][100]/D");
-  T->Branch("pjet_constit_e",&pjet_constit_e,"pjet_constit_e[max_njets][100]/D");
+  T->Branch("pjet_constit_pt",&pjet_constit_pt,"pjet_constit_pt[npjets][100]/F");
+  T->Branch("pjet_constit_eta",&pjet_constit_eta,"pjet_constit_eta[npjets][100]/F");
+  T->Branch("pjet_constit_phi",&pjet_constit_phi,"pjet_constit_phi[npjets][100]/F");
+  T->Branch("pjet_constit_e",&pjet_constit_e,"pjet_constit_e[npjets][100]/F");
   T->Branch("is_pqjet",&is_pqjet,"is_pqjet[npjets]/O");
   T->Branch("is_pgjet",&is_pgjet,"is_pgjet[npjets]/O");
 
