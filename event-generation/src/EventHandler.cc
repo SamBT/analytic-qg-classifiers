@@ -223,7 +223,7 @@ void EventHandler::DeclareBranches() {
   T->Branch("pjet_phi",&pjet_phi,"pjet_phi[npjets]/D");
   T->Branch("pjet_m",&pjet_m,"pjet_m[npjets]/D");
   T->Branch("pjet_mult",&pjet_mult,"pjet_mult[npjets]/I");
-  T->Branch("plead_mult",&plead_mult,"plead_mult/I")
+  T->Branch("plead_mult",&plead_mult,"plead_mult/I");
   T->Branch("plead_constit_pt",&plead_constit_pt,"plead_constit_pt[plead_mult]/D");
   T->Branch("plead_constit_eta",&plead_constit_eta,"plead_constit_eta[plead_mult]/D");
   T->Branch("plead_constit_phi",&plead_constit_phi,"plead_constit_phi[plead_mult]/D");
