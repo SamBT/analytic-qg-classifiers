@@ -82,10 +82,10 @@ class EventHandler {
     double pjet_phi[max_njets];
     double pjet_m[max_njets];
     int pjet_mult[max_njets];
-    vector<vector<double>> pjet_constit_pt;
-    vector<vector<double>> pjet_constit_eta;
-    vector<vector<double>> pjet_constit_phi;
-    vector<vector<double>> pjet_constit_e;
+    double plead_constit_pt[500];
+    double plead_constit_eta[500];
+    double plead_constit_phi[500];
+    double plead_constit_e[500];
     bool is_pqjet[max_njets];
     bool is_pgjet[max_njets];
 

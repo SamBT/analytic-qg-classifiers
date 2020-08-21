@@ -149,21 +149,21 @@ void EventHandler::AnalyzeEvent(int iEvt, Pythia8::Pythia& pyth) {
       is_pqjet[npJetsFilled] = false;
       is_pgjet[npJetsFilled] = false;
     }
-    //Filling constituent info
-    vector<double> const_pt, const_eta, const_phi, const_e;
-    for (int j = 0; j < partonJets[i].constituents().size(); j++) {
-      const_pt.push_back(partonJets[i].constituents()[j].pt());
-      const_eta.push_back(partonJets[i].constituents()[j].eta());
-      const_phi.push_back(partonJets[i].constituents()[j].phi());
-      const_e.push_back(partonJets[i].constituents()[j].e());
-    }
-    pjet_constit_pt.push_back(const_pt);
-    pjet_constit_eta.push_back(const_eta);
-    pjet_constit_phi.push_back(const_phi);
-    pjet_constit_e.push_back(const_e);
 
     npJetsFilled++;
   }
+
+  //Filling constituent info
+  for (int j = 0; j < partonJets[0].constituents().size(); j++) {
+    plead_constit_pt[j] = partonJets[0].constituents()[j].pt();
+    plead_constit_eta[j] = partonJets[0].constituents()[j].eta();
+    plead_constit_phi[j] = partonJets[0].constituents()[j].phi();
+    plead_constit_e[j] = partonJets[0].constituents()[j].e();
+  }
+  plead_constit_pt
+  plead_constit_eta.push_back(const_eta);
+  plead_constit_phi.push_back(const_phi);
+  plead_constit_e.push_back(const_e);
 
   //Filling tree and finising up
   T->Fill();
@@ -223,10 +223,10 @@ void EventHandler::DeclareBranches() {
   T->Branch("pjet_phi",&pjet_phi,"pjet_phi[npjets]/D");
   T->Branch("pjet_m",&pjet_m,"pjet_m[npjets]/D");
   T->Branch("pjet_mult",&pjet_mult,"pjet_mult[npjets]/I");
-  T->Branch("pjet_constit_pt",&pjet_constit_pt);
-  T->Branch("pjet_constit_eta",&pjet_constit_eta);
-  T->Branch("pjet_constit_phi",&pjet_constit_phi);
-  T->Branch("pjet_constit_e",&pjet_constit_e);
+  T->Branch("plead_constit_pt",&plead_constit_pt,"plead_constit_pt[500]/D");
+  T->Branch("plead_constit_eta",&plead_constit_eta,"plead_constit_eta[500]/D");
+  T->Branch("plead_constit_phi",&plead_constit_phi,"plead_constit_phi[500]/D");
+  T->Branch("plead_constit_e",&plead_constit_e,"plead_constit_e[500]/D");
   T->Branch("is_pqjet",&is_pqjet,"is_pqjet[npjets]/O");
   T->Branch("is_pgjet",&is_pgjet,"is_pgjet[npjets]/O");
 
@@ -305,10 +305,12 @@ void EventHandler::ResetBranches() {
     pgjet_m[i] = -999;
   }
 
-  pjet_constit_pt.clear();
-  pjet_constit_eta.clear();
-  pjet_constit_phi.clear();
-  pjet_constit_e.clear();
+  for (int i = 0; i < 500; i++) {
+    plead_constit_pt[i] = -999;
+    plead_constit_eta[i] = -999;
+    plead_constit_phi[i] = -999;
+    plead_constit_e[i] = -999;
+  }
 
   return;
 }
