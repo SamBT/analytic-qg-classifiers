@@ -152,6 +152,7 @@ void EventHandler::AnalyzeEvent(int iEvt, Pythia8::Pythia& pyth) {
 
     //Filling constituent info
     if (i == 0) {
+      plead_mult = partonJets[i].constituents().size();
       for (int j = 0; j < partonJets[i].constituents().size(); j++) {
         plead_constit_pt[j] = partonJets[i].constituents()[j].pt();
         plead_constit_eta[j] = partonJets[i].constituents()[j].eta();
@@ -222,10 +223,11 @@ void EventHandler::DeclareBranches() {
   T->Branch("pjet_phi",&pjet_phi,"pjet_phi[npjets]/D");
   T->Branch("pjet_m",&pjet_m,"pjet_m[npjets]/D");
   T->Branch("pjet_mult",&pjet_mult,"pjet_mult[npjets]/I");
-  T->Branch("plead_constit_pt",&plead_constit_pt,"plead_constit_pt[500]/D");
-  T->Branch("plead_constit_eta",&plead_constit_eta,"plead_constit_eta[500]/D");
-  T->Branch("plead_constit_phi",&plead_constit_phi,"plead_constit_phi[500]/D");
-  T->Branch("plead_constit_e",&plead_constit_e,"plead_constit_e[500]/D");
+  T->Branch("plead_mult",&plead_mult,"plead_mult/I")
+  T->Branch("plead_constit_pt",&plead_constit_pt,"plead_constit_pt[plead_mult]/D");
+  T->Branch("plead_constit_eta",&plead_constit_eta,"plead_constit_eta[plead_mult]/D");
+  T->Branch("plead_constit_phi",&plead_constit_phi,"plead_constit_phi[plead_mult]/D");
+  T->Branch("plead_constit_e",&plead_constit_e,"plead_constit_e[plead_mult]/D");
   T->Branch("is_pqjet",&is_pqjet,"is_pqjet[npjets]/O");
   T->Branch("is_pgjet",&is_pgjet,"is_pgjet[npjets]/O");
 
@@ -262,6 +264,7 @@ void EventHandler::ResetBranches() {
   npjets = 0;
   npqjets = 0;
   npgjets = 0;
+  plead_mult = 0;
 
   for (int i = 0; i < max_njets; i++) {
     jet_pt[i] = -999;

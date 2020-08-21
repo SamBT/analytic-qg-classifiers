@@ -82,6 +82,7 @@ class EventHandler {
     double pjet_phi[max_njets];
     double pjet_m[max_njets];
     int pjet_mult[max_njets];
+    int plead_mult;
     double plead_constit_pt[500];
     double plead_constit_eta[500];
     double plead_constit_phi[500];
