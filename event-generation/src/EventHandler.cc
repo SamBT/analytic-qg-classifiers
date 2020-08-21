@@ -160,10 +160,6 @@ void EventHandler::AnalyzeEvent(int iEvt, Pythia8::Pythia& pyth) {
     plead_constit_phi[j] = partonJets[0].constituents()[j].phi();
     plead_constit_e[j] = partonJets[0].constituents()[j].e();
   }
-  plead_constit_pt
-  plead_constit_eta.push_back(const_eta);
-  plead_constit_phi.push_back(const_phi);
-  plead_constit_e.push_back(const_e);
 
   //Filling tree and finising up
   T->Fill();
