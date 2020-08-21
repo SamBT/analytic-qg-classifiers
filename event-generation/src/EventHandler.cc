@@ -150,16 +150,19 @@ void EventHandler::AnalyzeEvent(int iEvt, Pythia8::Pythia& pyth) {
       is_pgjet[npJetsFilled] = false;
     }
 
+    //Filling constituent info
+    if (i == 0) {
+      for (int j = 0; j < partonJets[i].constituents().size(); j++) {
+        plead_constit_pt[j] = partonJets[i].constituents()[j].pt();
+        plead_constit_eta[j] = partonJets[i].constituents()[j].eta();
+        plead_constit_phi[j] = partonJets[i].constituents()[j].phi();
+        plead_constit_e[j] = partonJets[i].constituents()[j].e();
+      }
+    }
+
     npJetsFilled++;
   }
 
-  //Filling constituent info
-  for (int j = 0; j < partonJets[0].constituents().size(); j++) {
-    plead_constit_pt[j] = partonJets[0].constituents()[j].pt();
-    plead_constit_eta[j] = partonJets[0].constituents()[j].eta();
-    plead_constit_phi[j] = partonJets[0].constituents()[j].phi();
-    plead_constit_e[j] = partonJets[0].constituents()[j].e();
-  }
 
   //Filling tree and finising up
   T->Fill();
