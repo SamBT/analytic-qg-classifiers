@@ -12,7 +12,7 @@ Beams:eCM = 125
 #Higgs settings
 HiggsSM:ffbar2H = on
 25:onMode = off
-25:onIfAny = 1 2 3 21 
+25:onIfAny = 1 2 3
 
 #DIRE Parton shower settings
-DireTimes:kernelOrder = -1
+DireTimes:kernelOrder = 0

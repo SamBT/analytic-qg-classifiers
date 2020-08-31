@@ -30,14 +30,15 @@ int main( int argc, char* argv[] ) {
   int nev = 1000;
   double CF = 1.33333;
   double CA = 3.00000;
-  if (argc < 2) {
-    cout << "Too few arguments! Usage : ./events dire-config.cmnd nEvents CF CA" << endl;
+  if (argc < 5) {
+    cout << "Too few arguments! Usage : ./events dire-config.cmnd CF CA nEvents" << endl;
     return 0;
   }
   else {
     //config = argv[1];
     CF = atof(argv[2]);
     CA = atof(argv[3]);
+    nev = atoi(argv[4]);
   }
 
   // initialize Pythia and Dire
