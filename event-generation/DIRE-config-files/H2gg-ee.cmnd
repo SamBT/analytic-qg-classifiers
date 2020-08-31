@@ -14,5 +14,4 @@ HiggsSM:ffbar2H = on
 25:onMode = off
 25:onIfAny = 21 
 
-#DIRE Parton shower settings
-DireTimes:kernelOrder = -1
+
