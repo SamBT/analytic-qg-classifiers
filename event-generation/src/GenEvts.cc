@@ -34,7 +34,7 @@ int main( int argc, char* argv[] ) {
   }
   else {
     //config = argv[1];
-    nev = atoi(argv[2])
+    nev = atoi(argv[2]);
     CF = atof(argv[3]);
     CA = atof(argv[4]);
     kernelOrder = atoi(argv[5]);
