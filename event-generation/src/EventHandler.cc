@@ -123,7 +123,7 @@ void EventHandler::AnalyzeEvent(int iEvt, Pythia8::Pythia& pyth) {
     pjet_m[npJetsFilled] = partonJets[i].m();
     pjet_mult[npJetsFilled] = partonJets[i].constituents().size();
     int type = JetType(partonJets[i],partonsForQGTagging);
-    if (type <= 6)
+    if (type <= 6) {
       npqjets++;
       is_pqjet[npJetsFilled] = true;
       is_pgjet[npJetsFilled] = false;
@@ -132,7 +132,7 @@ void EventHandler::AnalyzeEvent(int iEvt, Pythia8::Pythia& pyth) {
       pqjet_phi[npQJetsFilled] = partonJets[i].phi();
       pqjet_m[npQJetsFilled] = partonJets[i].m();
       pqjet_mult[npQJetsFilled] = partonJets[i].constituents().size();
-      if (npQjetsFilled == 0) {
+      if (npQJetsFilled == 0) {
         for (int j = 0; j < partonJets[i].constituents().size(); j++) {
           pqlead_constit_pt[j] = partonJets[i].constituents()[j].pt();
           pqlead_constit_eta[j] = partonJets[i].constituents()[j].eta();
@@ -151,7 +151,7 @@ void EventHandler::AnalyzeEvent(int iEvt, Pythia8::Pythia& pyth) {
       pgjet_phi[npGJetsFilled] = partonJets[i].phi();
       pgjet_m[npGJetsFilled] = partonJets[i].m();
       pgjet_mult[npGJetsFilled] = partonJets[i].constituents().size();
-      if (npGjetsFilled == 0) {
+      if (npGJetsFilled == 0) {
         for (int j = 0; j < partonJets[i].constituents().size(); j++) {
           pglead_constit_pt[j] = partonJets[i].constituents()[j].pt();
           pglead_constit_eta[j] = partonJets[i].constituents()[j].eta();
