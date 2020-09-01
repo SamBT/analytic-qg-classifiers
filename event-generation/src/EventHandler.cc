@@ -123,7 +123,7 @@ void EventHandler::AnalyzeEvent(int iEvt, Pythia8::Pythia& pyth) {
     pjet_m[npJetsFilled] = partonJets[i].m();
     pjet_mult[npJetsFilled] = partonJets[i].constituents().size();
     int type = JetType(partonJets[i],partonsForQGTagging);
-    if (type <= 6) {
+    if (type <= 6)
       npqjets++;
       is_pqjet[npJetsFilled] = true;
       is_pgjet[npJetsFilled] = false;
@@ -132,6 +132,14 @@ void EventHandler::AnalyzeEvent(int iEvt, Pythia8::Pythia& pyth) {
       pqjet_phi[npQJetsFilled] = partonJets[i].phi();
       pqjet_m[npQJetsFilled] = partonJets[i].m();
       pqjet_mult[npQJetsFilled] = partonJets[i].constituents().size();
+      if (npQjetsFilled == 0) {
+        for (int j = 0; j < partonJets[i].constituents().size(); j++) {
+          pqlead_constit_pt[j] = partonJets[i].constituents()[j].pt();
+          pqlead_constit_eta[j] = partonJets[i].constituents()[j].eta();
+          pqlead_constit_phi[j] = partonJets[i].constituents()[j].phi();
+          pqlead_constit_e[j] = partonJets[i].constituents()[j].e();
+        }
+      }
       npQJetsFilled++;
     }
     else if (type == 21) {
@@ -143,6 +151,14 @@ void EventHandler::AnalyzeEvent(int iEvt, Pythia8::Pythia& pyth) {
       pgjet_phi[npGJetsFilled] = partonJets[i].phi();
       pgjet_m[npGJetsFilled] = partonJets[i].m();
       pgjet_mult[npGJetsFilled] = partonJets[i].constituents().size();
+      if (npGjetsFilled == 0) {
+        for (int j = 0; j < partonJets[i].constituents().size(); j++) {
+          pglead_constit_pt[j] = partonJets[i].constituents()[j].pt();
+          pglead_constit_eta[j] = partonJets[i].constituents()[j].eta();
+          pglead_constit_phi[j] = partonJets[i].constituents()[j].phi();
+          pglead_constit_e[j] = partonJets[i].constituents()[j].e();
+        }
+      }
       npGJetsFilled++;
     }
     else {
@@ -152,7 +168,6 @@ void EventHandler::AnalyzeEvent(int iEvt, Pythia8::Pythia& pyth) {
 
     //Filling constituent info
     if (i == 0) {
-      plead_mult = partonJets[i].constituents().size();
       for (int j = 0; j < partonJets[i].constituents().size(); j++) {
         plead_constit_pt[j] = partonJets[i].constituents()[j].pt();
         plead_constit_eta[j] = partonJets[i].constituents()[j].eta();
@@ -223,11 +238,10 @@ void EventHandler::DeclareBranches() {
   T->Branch("pjet_phi",&pjet_phi,"pjet_phi[npjets]/D");
   T->Branch("pjet_m",&pjet_m,"pjet_m[npjets]/D");
   T->Branch("pjet_mult",&pjet_mult,"pjet_mult[npjets]/I");
-  T->Branch("plead_mult",&plead_mult,"plead_mult/I");
-  T->Branch("plead_constit_pt",&plead_constit_pt,"plead_constit_pt[plead_mult]/D");
-  T->Branch("plead_constit_eta",&plead_constit_eta,"plead_constit_eta[plead_mult]/D");
-  T->Branch("plead_constit_phi",&plead_constit_phi,"plead_constit_phi[plead_mult]/D");
-  T->Branch("plead_constit_e",&plead_constit_e,"plead_constit_e[plead_mult]/D");
+  T->Branch("plead_constit_pt",&plead_constit_pt,"plead_constit_pt[100]/D");
+  T->Branch("plead_constit_eta",&plead_constit_eta,"plead_constit_eta[100]/D");
+  T->Branch("plead_constit_phi",&plead_constit_phi,"plead_constit_phi[100]/D");
+  T->Branch("plead_constit_e",&plead_constit_e,"plead_constit_e[100]/D");
   T->Branch("is_pqjet",&is_pqjet,"is_pqjet[npjets]/O");
   T->Branch("is_pgjet",&is_pgjet,"is_pgjet[npjets]/O");
 
@@ -236,12 +250,20 @@ void EventHandler::DeclareBranches() {
   T->Branch("pqjet_phi",&pqjet_phi,"pqjet_phi[npqjets]/D");
   T->Branch("pqjet_m",&pqjet_m,"pqjet_m[npqjets]/D");
   T->Branch("pqjet_mult",&pqjet_mult,"pqjet_mult[npqjets]/I");
+  T->Branch("pqlead_constit_pt",&pqlead_constit_pt,"pqlead_constit_pt[100]/D");
+  T->Branch("pqlead_constit_eta",&pqlead_constit_eta,"pqlead_constit_eta[100]/D");
+  T->Branch("pqlead_constit_phi",&pqlead_constit_phi,"pqlead_constit_phi[100]/D");
+  T->Branch("pqlead_constit_e",&pqlead_constit_e,"pqlead_constit_e[100]/D");
 
   T->Branch("pgjet_pt",&pgjet_pt,"pgjet_pt[npgjets]/D");
   T->Branch("pgjet_eta",&pgjet_eta,"pgjet_eta[npgjets]/D");
   T->Branch("pgjet_phi",&pgjet_phi,"pgjet_phi[npgjets]/D");
   T->Branch("pgjet_m",&pgjet_m,"pgjet_m[npgjets]/D");
   T->Branch("pgjet_mult",&pgjet_mult,"pgjet_mult[npgjets]/I");
+  T->Branch("pglead_constit_pt",&pglead_constit_pt,"pglead_constit_pt[100]/D");
+  T->Branch("pglead_constit_eta",&pglead_constit_eta,"pglead_constit_eta[100]/D");
+  T->Branch("pglead_constit_phi",&pglead_constit_phi,"pglead_constit_phi[100]/D");
+  T->Branch("pglead_constit_e",&pglead_constit_e,"pglead_constit_e[100]/D");
 
   T->GetListOfBranches()->ls();
 
@@ -264,7 +286,6 @@ void EventHandler::ResetBranches() {
   npjets = 0;
   npqjets = 0;
   npgjets = 0;
-  plead_mult = 0;
 
   for (int i = 0; i < max_njets; i++) {
     jet_pt[i] = -999;
@@ -307,11 +328,21 @@ void EventHandler::ResetBranches() {
     pgjet_m[i] = -999;
   }
 
-  for (int i = 0; i < 500; i++) {
-    plead_constit_pt[i] = -999;
-    plead_constit_eta[i] = -999;
-    plead_constit_phi[i] = -999;
-    plead_constit_e[i] = -999;
+  for (int i = 0; i < 100; i++) {
+    plead_constit_pt[i] = 0;
+    plead_constit_eta[i] = 0;
+    plead_constit_phi[i] = 0;
+    plead_constit_e[i] = 0;
+
+    pqlead_constit_pt[i] = 0;
+    pqlead_constit_eta[i] = 0;
+    pqlead_constit_phi[i] = 0;
+    pqlead_constit_e[i] = 0;
+
+    pglead_constit_pt[i] = 0;
+    pglead_constit_eta[i] = 0;
+    pglead_constit_phi[i] = 0;
+    pglead_constit_e[i] = 0;
   }
 
   return;

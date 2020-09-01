@@ -82,11 +82,10 @@ class EventHandler {
     double pjet_phi[max_njets];
     double pjet_m[max_njets];
     int pjet_mult[max_njets];
-    int plead_mult;
-    double plead_constit_pt[500];
-    double plead_constit_eta[500];
-    double plead_constit_phi[500];
-    double plead_constit_e[500];
+    double plead_constit_pt[100];
+    double plead_constit_eta[100];
+    double plead_constit_phi[100];
+    double plead_constit_e[100];
     bool is_pqjet[max_njets];
     bool is_pgjet[max_njets];
 
@@ -97,6 +96,10 @@ class EventHandler {
     double pqjet_phi[max_njets];
     double pqjet_m[max_njets];
     int pqjet_mult[max_njets];
+    double pqlead_constit_pt[100];
+    double pqlead_constit_eta[100];
+    double pqlead_constit_phi[100];
+    double pqlead_constit_e[100];
 
     //Gluon parton-jet variables
     int npgjets;
@@ -105,6 +108,10 @@ class EventHandler {
     double pgjet_phi[max_njets];
     double pgjet_m[max_njets];
     int pgjet_mult[max_njets];
+    double pglead_constit_pt[100];
+    double pglead_constit_eta[100];
+    double pglead_constit_phi[100];
+    double pglead_constit_e[100];
 
     //Fastjet objects
     fastjet::JetDefinition *m_jet_def; //Regular anti-kT jets

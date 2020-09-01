@@ -21,7 +21,7 @@ for process in [0,1]:
 	    # command line argument to run event generation
 	    cmd = ["./events", "dire.cmnd", "-nev", str(nev), "-proc", str(process), "-ecm", str(ecm), "-CF", str(CF), "-CA", str(CA)]
 	    p = subprocess.Popen(cmd, stdout=subprocess.PIPE)
-	    
+
 	    # print output
 	    [print(line) for line in p.stdout]
 	    p.wait()
