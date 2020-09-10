@@ -44,11 +44,10 @@ int main( int argc, char* argv[] ) {
   Pythia pythia;
   Dire dire;
   EventHandler Analysis(0.4,20);
-  dire.init(pythia, argv[1]);
+  //dire.init(pythia, argv[1]);
+  dire.initSettings(pythia);
 
-  cout << "CF = " << CF << ", CA = " << CA << endl;
   //Pythia settings not covered in DIRE config file
-
   // no substructure in e+e- beams
   pythia.readString("PDF:lepton = off");
   pythia.readString("HadronLevel:all = off"); // don't need hadronization
@@ -57,11 +56,9 @@ int main( int argc, char* argv[] ) {
   // set the gluon casimir value
   pythia.settings.parm("DireColorQCD:CA", CA);
   //set the kernel order
-  pythia.settings.parm("DireTimes:kernelOrder",kernelOrder);
+  pythia.settings.mode("DireTimes:kernelOrder",kernelOrder);
 
-  cout << "Pythia thinks: CF = " << pythia.settings.parm("DireColorQCD:CF") << ", CA = " << pythia.settings.parm("DireColorQCD:CA") << endl;
-  pythia.settings.listChanged();
-
+  dire.init(pythia, argv[1]);
   pythia.init();
 
   cout << "---------------------------STARTING EVENT GEN--------------------------- \n \n \n" << endl;
