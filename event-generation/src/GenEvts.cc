@@ -51,6 +51,7 @@ int main( int argc, char* argv[] ) {
 
   // no substructure in e+e- beams
   pythia.readString("PDF:lepton = off");
+  pythia.readString("HadronLevel:all = off"); // don't need hadronization
   // set the quark casimir value
   pythia.settings.parm("DireColorQCD:CF", CF);
   // set the gluon casimir value
@@ -58,8 +59,10 @@ int main( int argc, char* argv[] ) {
   //set the kernel order
   pythia.settings.parm("DireTimes:kernelOrder",kernelOrder);
 
-  cout << "Pythia thinks: CF = " << pythia.settings.list("DireColorQCD:CF") << ", CA = " << pythia.settings.list("DireColorQCD:CA") << endl;
+  cout << "Pythia thinks: CF = " << pythia.settings.parm("DireColorQCD:CF") << ", CA = " << pythia.settings.parm("DireColorQCD:CA") << endl;
   pythia.settings.listChanged();
+
+  pythia.init();
 
   cout << "---------------------------STARTING EVENT GEN--------------------------- \n \n \n" << endl;
 
