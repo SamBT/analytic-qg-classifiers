@@ -44,6 +44,7 @@ int main( int argc, char* argv[] ) {
   Pythia pythia;
   Dire dire;
   EventHandler Analysis(0.4,20);
+  dire.init(pythia, argv[1]);
 
   cout << "CF = " << CF << ", CA = " << CA << endl;
   //Pythia settings not covered in DIRE config file
@@ -61,8 +62,6 @@ int main( int argc, char* argv[] ) {
   pythia.settings.listChanged();
 
   cout << "---------------------------STARTING EVENT GEN--------------------------- \n \n \n" << endl;
-  // initialize Dire
-  dire.init(pythia, argv[1]);
 
   // Loop to generate events
   Analysis.Begin();
