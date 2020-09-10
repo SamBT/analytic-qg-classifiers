@@ -45,7 +45,7 @@ int main( int argc, char* argv[] ) {
   Dire dire;
   EventHandler Analysis(0.4,20);
 
-  cout << "CF = " << CF << "CA = " << CA << endl;
+  cout << "CF = " << CF << ", CA = " << CA << endl;
   //Pythia settings not covered in DIRE config file
 
   // no substructure in e+e- beams
@@ -57,8 +57,10 @@ int main( int argc, char* argv[] ) {
   //set the kernel order
   pythia.settings.parm("DireTimes:kernelOrder",kernelOrder);
 
+  cout << "Pythia thinks: CF = " << pythia.settings.list("DireColorQCD:CF") << ", CA = " << pythia.settings.list("DireColorQCD:CA") << endl;
   pythia.settings.listChanged();
 
+  cout << "---------------------------STARTING EVENT GEN--------------------------- \n \n \n" << endl;
   // initialize Dire
   dire.init(pythia, argv[1]);
 
