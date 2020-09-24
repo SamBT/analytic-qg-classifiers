@@ -50,7 +50,6 @@ int main( int argc, char* argv[] ) {
   //Pythia settings not covered in DIRE config file
   // no substructure in e+e- beams
   pythia.readString("PDF:lepton = off");
-  pythia.readString("HadronLevel:all = off"); // don't need hadronization
   // set the quark casimir value
   pythia.settings.parm("DireColorQCD:CF", CF);
   // set the gluon casimir value
