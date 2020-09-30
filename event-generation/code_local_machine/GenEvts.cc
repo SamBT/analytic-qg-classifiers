@@ -45,6 +45,7 @@ int main( int argc, char* argv[] ) {
 
   //Pythia settings not covered in DIRE config file
   // no substructure in e+e- beams
+  pythia.readString("PartonShowers:model = 3");
   pythia.readFile(argv[1]);
   pythia.readString("PDF:lepton = off");
   // set the quark casimir value
