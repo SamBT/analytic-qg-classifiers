@@ -60,9 +60,11 @@ void EventHandler::AnalyzeEvent(int iEvt, Pythia8::Pythia& pyth) {
 
     if (part.isFinal()) {
       particlesForJets.push_back(p);
+      cout << "parton user index is " << part.id() << ", isFinalPL = " << part.isFinalPartonLevel() << ", isFinal = " << part.isFinal() << endl;
     }
     else {
       partonsForJets.push_back(p);
+      cout << "parton user index is " << part.id() << ", isFinalPL = " << part.isFinalPartonLevel() << ", isFinal = " << part.isFinal() << endl;
     }
   } //End particle loop
 
@@ -173,6 +175,7 @@ void EventHandler::AnalyzeEvent(int iEvt, Pythia8::Pythia& pyth) {
         plead_constit_eta[j] = partonJets[i].constituents()[j].eta();
         plead_constit_phi[j] = partonJets[i].constituents()[j].phi();
         plead_constit_e[j] = partonJets[i].constituents()[j].e();
+	plead_constit_id[j] = partonJets[i].constituents()[j].user_index();
       }
     }
 
@@ -242,6 +245,7 @@ void EventHandler::DeclareBranches() {
   T->Branch("plead_constit_eta",&plead_constit_eta,"plead_constit_eta[100]/D");
   T->Branch("plead_constit_phi",&plead_constit_phi,"plead_constit_phi[100]/D");
   T->Branch("plead_constit_e",&plead_constit_e,"plead_constit_e[100]/D");
+  T->Branch("plead_constit_id",&plead_constit_id,"plead_constit_id[100]I");
   T->Branch("is_pqjet",&is_pqjet,"is_pqjet[npjets]/O");
   T->Branch("is_pgjet",&is_pgjet,"is_pgjet[npjets]/O");
 
@@ -333,6 +337,7 @@ void EventHandler::ResetBranches() {
     plead_constit_eta[i] = 0;
     plead_constit_phi[i] = 0;
     plead_constit_e[i] = 0;
+    plead_constit_id[i] = 0;
 
     pqlead_constit_pt[i] = 0;
     pqlead_constit_eta[i] = 0;

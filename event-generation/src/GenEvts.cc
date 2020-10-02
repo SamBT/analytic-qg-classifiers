@@ -57,6 +57,9 @@ int main( int argc, char* argv[] ) {
   //set the kernel order
   pythia.settings.mode("DireTimes:kernelOrder",kernelOrder);
 
+  //turn off hadronization
+  pythia.readString("HadronLevel:all = off");
+
   dire.init(pythia, argv[1]);
   pythia.init();
 

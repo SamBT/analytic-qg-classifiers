@@ -86,6 +86,7 @@ class EventHandler {
     double plead_constit_eta[100];
     double plead_constit_phi[100];
     double plead_constit_e[100];
+    int plead_constit_id[100];
     bool is_pqjet[max_njets];
     bool is_pgjet[max_njets];
 
