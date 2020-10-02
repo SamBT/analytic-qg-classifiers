@@ -60,9 +60,10 @@ void EventHandler::AnalyzeEvent(int iEvt, Pythia8::Pythia& pyth) {
 
     if (part.isFinal()) {
       particlesForJets.push_back(p);
-      cout << "parton user index is " << part.id() << ", isFinalPL = " << part.isFinalPartonLevel() << ", isFinal = " << part.isFinal() << endl;
     }
-    else {
+    //For some reason, pythia tags final-state partons as both isFinal and isFinalPartonLevel when hadronization is turned off
+    //Furthermore, when hadronization is turned on, it seems like some (non final-state) hadrons are tagged isFinalPartonLevel
+    if (part.isFinal() && part.isFinalPartonLevel()) {
       partonsForJets.push_back(p);
       cout << "parton user index is " << part.id() << ", isFinalPL = " << part.isFinalPartonLevel() << ", isFinal = " << part.isFinal() << endl;
     }
@@ -175,7 +176,7 @@ void EventHandler::AnalyzeEvent(int iEvt, Pythia8::Pythia& pyth) {
         plead_constit_eta[j] = partonJets[i].constituents()[j].eta();
         plead_constit_phi[j] = partonJets[i].constituents()[j].phi();
         plead_constit_e[j] = partonJets[i].constituents()[j].e();
-	plead_constit_id[j] = partonJets[i].constituents()[j].user_index();
+	      plead_constit_id[j] = partonJets[i].constituents()[j].user_index();
       }
     }
 
@@ -245,7 +246,7 @@ void EventHandler::DeclareBranches() {
   T->Branch("plead_constit_eta",&plead_constit_eta,"plead_constit_eta[100]/D");
   T->Branch("plead_constit_phi",&plead_constit_phi,"plead_constit_phi[100]/D");
   T->Branch("plead_constit_e",&plead_constit_e,"plead_constit_e[100]/D");
-  T->Branch("plead_constit_id",&plead_constit_id,"plead_constit_id[100]I");
+  T->Branch("plead_constit_id",&plead_constit_id,"plead_constit_id[100]/I");
   T->Branch("is_pqjet",&is_pqjet,"is_pqjet[npjets]/O");
   T->Branch("is_pgjet",&is_pgjet,"is_pgjet[npjets]/O");
 
