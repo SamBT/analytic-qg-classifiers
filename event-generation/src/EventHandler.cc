@@ -65,7 +65,6 @@ void EventHandler::AnalyzeEvent(int iEvt, Pythia8::Pythia& pyth) {
     //Furthermore, when hadronization is turned on, it seems like some (non final-state) hadrons are tagged isFinalPartonLevel
     if (part.isFinal() && part.isFinalPartonLevel()) {
       partonsForJets.push_back(p);
-      cout << "parton user index is " << part.id() << ", isFinalPL = " << part.isFinalPartonLevel() << ", isFinal = " << part.isFinal() << endl;
     }
   } //End particle loop
 
