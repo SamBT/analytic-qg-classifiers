@@ -16,19 +16,23 @@
 #include "Dire/Dire.h"
 #include "EventHandler.h"
 
+#include "boost/program_options.hpp"
+
 using namespace Pythia8;
 using std::atoi;
 using std::atof;
 using std::cout;
 using std::endl;
+namespace po = boost::program_options;
 
 int main( int argc, char* argv[] ) {
 
-  int nev = 1000;
-  double CF = 1.33333;
-  double CA = 3.00000;
-  int kernelOrder = 3;
-  if (argc < 5) {
+  int nev;
+  double CF, CA;
+  int kernelOrder;
+  vector<string> configs;
+  
+  /*if (argc < 5) {
     cout << "Too few arguments! Usage : ./events dire-config.cmnd nEvents CF CA kernelOrder" << endl;
     return 0;
   }
@@ -38,13 +42,27 @@ int main( int argc, char* argv[] ) {
     CF = atof(argv[3]);
     CA = atof(argv[4]);
     kernelOrder = atoi(argv[5]);
-  }
+    }*/
+
+  po::options_description desc("Allowed options");
+  desc.add_options()
+    ("help", "produce help message")
+    ("nev,n",po::value<int>(&nev)->default_value(1000),"number of events")
+    ("cf",po::value<double>(&CF)->default_value(1.33333),"quark casimir")
+    ("ca",po::value<double>(&CA)->default_value(3.0),"gluon casimir")
+    ("kernel,k",po::value<int>(&kernelOrder)->default_value(1),"kernel order")
+    ("config,c",po::value< vector<string> >(&configs),"config files")
+    ;
+  po::variables_map vm;
+  po::store(po::parse_command_line(argc, argv, desc), vm);
+  po::notify(vm);
+
+  cout << "Called with nev = " << nev << ", CF = " << CF << ", CA = " << CA << ", kernel order = " << kernelOrder << endl;
 
   // initialize Pythia and Dire
   Pythia pythia;
   Dire dire;
   EventHandler Analysis(0.4,20);
-  //dire.init(pythia, argv[1]);
   dire.initSettings(pythia);
 
   //Pythia settings not covered in DIRE config file
@@ -56,11 +74,18 @@ int main( int argc, char* argv[] ) {
   pythia.settings.parm("DireColorQCD:CA", CA);
   //set the kernel order
   pythia.settings.mode("DireTimes:kernelOrder",kernelOrder);
-
   //turn off hadronization
   pythia.readString("HadronLevel:all = off");
+  //Messing with the splitting functions
+  pythia.readString("DireTimes:doGeneralizedKernel = on");
 
-  dire.init(pythia, argv[1]);
+  //Read config file(s)
+  for (int j = 0; j < configs.size(); j++) {
+    cout << "reading config file : " << configs[j] << endl;
+    pythia.readFile(configs[j]);
+  }
+
+  dire.init(pythia);
   pythia.init();
 
   cout << "---------------------------STARTING EVENT GEN--------------------------- \n \n \n" << endl;
