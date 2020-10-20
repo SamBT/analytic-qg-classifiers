@@ -13,7 +13,7 @@ Beams:eCM = 250
 #Higgs settings
 HiggsSM:ffbar2H = on
 25:onMode = off
-25:onIfAny = 21 
+25:onIfAny = 21
 
+Random:setSeed = on
 Random:Seed = 0
-
