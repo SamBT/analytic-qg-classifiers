@@ -20,7 +20,7 @@ int main( int argc, char* argv[] ) {
   double CF, CA;
   int kernelOrder;
   vector<string> configs;
-  
+
   po::options_description desc("Allowed options");
   desc.add_options()
     ("help", "produce help message")
@@ -36,13 +36,13 @@ int main( int argc, char* argv[] ) {
 
   cout << "Called with nev = " << nev << ", CF = " << CF << ", CA = " << CA << ", kernel order = " << kernelOrder << endl;
 
-  // initialize Pythia and Dire
+  // initialize Pythia
   Pythia pythia;
-  Dire dire;
   EventHandler Analysis(0.4,20);
-  dire.initSettings(pythia);
 
   //Pythia settings not covered in DIRE config file
+  //Use DIRE parton shower
+  pythia.readString("PartonShowers:model = 3")
   // no substructure in e+e- beams
   pythia.readString("PDF:lepton = off");
   // set the quark casimir value
@@ -63,8 +63,6 @@ int main( int argc, char* argv[] ) {
   }
 
   pythia.settings.writeFile("run_settings.txt",true);
-  
-  dire.init(pythia);
   pythia.init();
 
   cout << "---------------------------STARTING EVENT GEN--------------------------- \n \n \n" << endl;
