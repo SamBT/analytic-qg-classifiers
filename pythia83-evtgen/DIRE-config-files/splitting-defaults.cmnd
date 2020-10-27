@@ -3,7 +3,7 @@
 #Controlled by "DireGeneralizedKernel..." settings
 
 # q --> q_hard g_soft
-DireGeneralizedKernel:softCoeffs:Dire_fsr_qcd_1->1&21 = 2.0,1.0,0.0,0.
+DireGeneralizedKernel:softCoeffs:Dire_fsr_qcd_1->1&21 = 0.,1.,0.,0.
 DireGeneralizedKernel:softExps:Dire_fsr_qcd_1->1&21 = 0.,0.,0.,0.
 DireGeneralizedKernel:kappaCoeffs:Dire_fsr_qcd_1->1&21 = 0.,0.,0.,0.
 DireGeneralizedKernel:kappaExps:Dire_fsr_qcd_1->1&21 = 0.,0.,0.,0.
