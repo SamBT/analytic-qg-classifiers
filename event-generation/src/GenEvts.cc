@@ -2,6 +2,7 @@
 #include <string.h>
 
 #include "Pythia8/Pythia.h"
+#include "Dire/Dire.h"
 #include "EventHandler.h"
 
 #include "boost/program_options.hpp"
@@ -19,7 +20,7 @@ int main( int argc, char* argv[] ) {
   double CF, CA;
   int kernelOrder;
   vector<string> configs;
-
+  
   po::options_description desc("Allowed options");
   desc.add_options()
     ("help", "produce help message")
@@ -37,11 +38,11 @@ int main( int argc, char* argv[] ) {
 
   // initialize Pythia and Dire
   Pythia pythia;
+  Dire dire;
   EventHandler Analysis(0.4,20);
+  dire.initSettings(pythia);
 
-  //Pythia settings
-  //Use DIRE parton shower
-  pythia.readString("PartonShowers:model = 3")
+  //Pythia settings not covered in DIRE config file
   // no substructure in e+e- beams
   pythia.readString("PDF:lepton = off");
   // set the quark casimir value
@@ -55,14 +56,15 @@ int main( int argc, char* argv[] ) {
   //Messing with the splitting functions
   pythia.readString("DireTimes:doGeneralizedKernel = on");
 
-  //Read config file(s) with additional settings (processes, tweaked kernels, etc)
+  //Read config file(s)
   for (int j = 0; j < configs.size(); j++) {
     cout << "reading config file : " << configs[j] << endl;
     pythia.readFile(configs[j]);
   }
 
   pythia.settings.writeFile("run_settings.txt",true);
-
+  
+  dire.init(pythia);
   pythia.init();
 
   cout << "---------------------------STARTING EVENT GEN--------------------------- \n \n \n" << endl;
