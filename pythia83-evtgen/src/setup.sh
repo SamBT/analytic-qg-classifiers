@@ -9,5 +9,12 @@ setup_fastjet() {
     export LD_LIBRARY_PATH=/global/project/projectdirs/atlas/sambt/MC_Generators/fastjet-install/lib:$LD_LIBRARY_PATH
 }
 
+setup_boost() {
+    export BOOSTINCDIR=/global/project/projectdirs/atlas/sambt/MC_Generators/boost-install/include
+    export BOOSTLIBLOCATION=/global/project/projectdirs/atlas/sambt/MC_Generators/boost-install/lib
+    export LD_LIBRARY_PATH=${BOOSTLIBLOCATION}:$LD_LIBRARY_PATH
+}
+
 setup_PYTHIA
 setup_fastjet
+setup_boost

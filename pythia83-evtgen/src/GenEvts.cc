@@ -2,7 +2,6 @@
 #include <string.h>
 
 #include "Pythia8/Pythia.h"
-#include "Dire/Dire.h"
 #include "EventHandler.h"
 
 #include "boost/program_options.hpp"
@@ -42,7 +41,7 @@ int main( int argc, char* argv[] ) {
 
   //Pythia settings not covered in DIRE config file
   //Use DIRE parton shower
-  pythia.readString("PartonShowers:model = 3")
+  pythia.readString("PartonShowers:model = 3");
   // no substructure in e+e- beams
   pythia.readString("PDF:lepton = off");
   // set the quark casimir value

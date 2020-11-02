@@ -6,7 +6,7 @@ cfg=$4
 
 
 date
-pythdir=/global/project/projectdirs/atlas/sambt/Pythia_output/optimal-classifiers
+pythdir=/global/project/projectdirs/atlas/sambt/pythia83-output/optimal-classifiers
 mkdir ${pythdir}/${proc}
 
 mkdir ${pythdir}/${proc}/kernel${kern}
@@ -19,10 +19,9 @@ module load root
 
 echo "in dir $PWD"
 
-cp /global/homes/s/sambt/Jets/optimal-classifiers/event-generation/src/GenEvts .
-source /global/homes/s/sambt/environment_scripts/setup_pythia_boost.sh
+cp /global/homes/s/sambt/Jets/optimal-classifiers/pythia83-evtgen/src/GenEvts .
+source /global/homes/s/sambt/Jets/optimal-classifiers/pythia83-evtgen/src/setup.sh
 
-config_dir=/global/homes/s/sambt/Jets/optimal-classifiers/event-generation/DIRE-config-files
 ./GenEvts $cfg
 
 mv test.root ${pythdir}/${proc}/kernel${kern}/${name}/output_${j}.root

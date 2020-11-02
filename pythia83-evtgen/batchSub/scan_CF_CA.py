@@ -6,7 +6,7 @@ nev = int(sys.argv[2])
 kernel = int(sys.argv[3])
 configs = sys.argv[4:]
 
-config_dir = "/global/homes/s/sambt/Jets/optimal-classifiers/event-generation/DIRE-config-files/"
+config_dir = "/global/homes/s/sambt/Jets/optimal-classifiers/pythia83-evtgen/DIRE-config-files/"
 
 CFs = [0.0001,1/3,2/3,1,4/3,5/3,2,7/3,8/3,3]
 CAs = [3.0]
@@ -25,7 +25,7 @@ for CF in CFs:
         print("config string : "+cfg_str)
             
         for i in range(1,njobs+1):
-            command = ["sbatch","-C","haswell","-q","regular","run_job.sh",name+"-CF{0:.1f}CA{1:.1f}".format(CF,CA),str(i),str(kernel),cfg_str]
+            command = ["sbatch","-C","haswell","-q","regular","-t","15","run_job.sh",name+"-CF{0:.1f}CA{1:.1f}".format(CF,CA),str(i),str(kernel),cfg_str]
             subprocess.run(command)
         print("****************************************")
             
