@@ -18,16 +18,17 @@ int main( int argc, char* argv[] ) {
   int nev;
   double CF, CA;
   int kernelOrder;
+  string inFile;
   vector<string> configs;
 
   po::options_description desc("Allowed options");
   desc.add_options()
     ("help", "produce help message")
-    ("nev,n",po::value<int>(&nev)->default_value(1000),"number of events")
     ("cf",po::value<double>(&CF)->default_value(1.33333),"quark casimir")
     ("ca",po::value<double>(&CA)->default_value(3.0),"gluon casimir")
     ("kernel,k",po::value<int>(&kernelOrder)->default_value(1),"kernel order")
-    ("config,c",po::value< vector<string> >(&configs),"config files")
+    ("input,i",po::value<string>(&inFile),"input LHE file")
+    ("config,c",po::value< vector<string> >(&configs),"input config files")
     ;
   po::variables_map vm;
   po::store(po::parse_command_line(argc, argv, desc), vm);
@@ -55,9 +56,12 @@ int main( int argc, char* argv[] ) {
   //Messing with the splitting functions
   pythia.readString("DireTimes:doGeneralizedKernel = on");
 
-  //Read config file(s)
+  //Read in LHE file
+  string lhe = "Beams:LHEF = ";
+  lhe += inFile;
+  pythia.readString(lhe);
+
   for (int j = 0; j < configs.size(); j++) {
-    cout << "reading config file : " << configs[j] << endl;
     pythia.readFile(configs[j]);
   }
 
@@ -77,11 +81,12 @@ int main( int argc, char* argv[] ) {
 
   // Loop to generate events
   Analysis.Begin();
-  for (int iev = 1; iev <= nev; iev++) {
+  for (int iev = 1; iev++) {
     // print a status update every 100 events
-    if (iev % 100 == 0) cout << "Generated " << iev << " events." << endl;
+    if (iev % 100 == 0) cout << "Showered " << iev << " events." << endl;
 
-    Analysis.AnalyzeEvent(iev,pythia);
+    bool good = Analysis.AnalyzeEvent(iev,pythia);
+    if (!good) break;
   }
   Analysis.End();
 

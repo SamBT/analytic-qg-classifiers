@@ -33,8 +33,8 @@ void EventHandler::End() {
   return;
 }
 
-void EventHandler::AnalyzeEvent(int iEvt, Pythia8::Pythia& pyth) {
-  if (!pyth.next()) return;
+bool EventHandler::AnalyzeEvent(int iEvt, Pythia8::Pythia& pyth) {
+  if (!pyth.next()) return false;
 
   ResetBranches();
 
@@ -185,7 +185,7 @@ void EventHandler::AnalyzeEvent(int iEvt, Pythia8::Pythia& pyth) {
 
   //Filling tree and finising up
   T->Fill();
-  return;
+  return true;
 }
 
 int EventHandler::JetType(fastjet::PseudoJet jet, vector<fastjet::PseudoJet> partons) {
