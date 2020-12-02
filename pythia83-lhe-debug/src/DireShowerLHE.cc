@@ -81,7 +81,7 @@ int main( int argc, char* argv[] ) {
 
   // Loop to generate events
   Analysis.Begin();
-  for (int iev = 1; iev++) {
+  for (int iev = 1; ; iev++) {
     // print a status update every 100 events
     if (iev % 100 == 0) cout << "Showered " << iev << " events." << endl;
 
