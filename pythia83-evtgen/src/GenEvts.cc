@@ -61,8 +61,17 @@ int main( int argc, char* argv[] ) {
     pythia.readFile(configs[j]);
   }
 
-  pythia.settings.writeFile("run_settings.txt",true);
   pythia.init();
+
+  //Have to read config again to get pythia to "remember" some settings after init
+  //e.g. init will set alphaSorder = 2 no matter what you tell it before init
+  for (int j = 0; j < configs.size(); j++) {
+    pythia.readFile(configs[j]);
+  }
+
+  pythia.init();
+
+  pythia.settings.writeFile("run_settings.txt",true);
 
   cout << "---------------------------STARTING EVENT GEN--------------------------- \n \n \n" << endl;
 
