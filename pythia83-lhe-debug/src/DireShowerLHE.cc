@@ -62,7 +62,7 @@ int main( int argc, char* argv[] ) {
 
   pythia.readString("Beams:frameType = 4");
   string lhe = "Beams:LHEF = ";
-  lhe += inFile
+  lhe += inFile;
 
   pythia.init();
 
