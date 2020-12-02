@@ -60,7 +60,11 @@ int main( int argc, char* argv[] ) {
     pythia.readFile(configs[j]);
   }
 
-  pythia.init(inFile);
+  pythia.readString("Beams:frameType = 4");
+  string lhe = "Beams:LHEF = ";
+  lhe += inFile
+
+  pythia.init();
 
   //Have to read config again to get pythia to "remember" some settings after init
   //e.g. init will set alphaSorder = 2 no matter what you tell it before init
@@ -68,7 +72,7 @@ int main( int argc, char* argv[] ) {
     pythia.readFile(configs[j]);
   }
 
-  pythia.init(inFile);
+  pythia.init();
 
   pythia.settings.writeFile("run_settings.txt",true);
 
