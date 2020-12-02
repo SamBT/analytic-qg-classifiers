@@ -2,7 +2,6 @@
 #include <string.h>
 
 #include "Pythia8/Pythia.h"
-#include "EventHandler.h"
 
 #include "boost/program_options.hpp"
 
@@ -35,11 +34,12 @@ int main( int argc, char* argv[] ) {
 
   cout << "Called with nev = " << nev << ", CF = " << CF << ", CA = " << CA << ", kernel order = " << kernelOrder << endl;
 
-  // initialize Pythia and Dire
+  // initialize Pythia
   Pythia pythia;
-  EventHandler Analysis(0.4,20);
-
-  //Pythia settings
+  //Pythia settings not covered in DIRE config file
+  //Use DIRE parton shower
+  pythia.readString("PartonLevel:all = off");
+  pythia.readString("HadronLevel:all = off");
   // no substructure in e+e- beams
   pythia.readString("PDF:lepton = off");
   // set the quark casimir value
@@ -49,31 +49,47 @@ int main( int argc, char* argv[] ) {
   //set the kernel order
   pythia.settings.mode("DireTimes:kernelOrder",kernelOrder);
   //turn off hadronization
-  pythia.readString("HadronLevel:all = off");
   //Messing with the splitting functions
   pythia.readString("DireTimes:doGeneralizedKernel = on");
 
-  //Read config file(s) with additional settings (processes, tweaked kernels, etc)
+  //Create LHE writer object
+  LHAupFromPYTHIA8 myLHA(&pythia.process, &pythia.info);
+  myLHA.openLHEF("hardProcess.lhe");
+
+  //Read config file(s)
   for (int j = 0; j < configs.size(); j++) {
     cout << "reading config file : " << configs[j] << endl;
     pythia.readFile(configs[j]);
   }
 
-  pythia.settings.writeFile("run_settings.txt",true);
-
   pythia.init();
+  // Store initialization info in the LHAup object.
+  myLHA.setInit();
+  // Write out this initialization info on the file.
+  myLHA.initLHEF();
+  //Have to read config again to get pythia to "remember" some settings after init
+  //e.g. init will set alphaSorder = 2 no matter what you tell it before init
 
-  cout << "---------------------------STARTING EVENT GEN--------------------------- \n \n \n" << endl;
+  for (int j = 0; j < configs.size(); j++) {
+    pythia.readFile(configs[j]);
+  }
 
   // Loop to generate events
-  Analysis.Begin();
   for (int iev = 1; iev <= nev; iev++) {
     // print a status update every 100 events
     if (iev % 100 == 0) cout << "Generated " << iev << " events." << endl;
-
-    Analysis.AnalyzeEvent(iev,pythia);
+    // Generate an event.
+    pythia.next();
+    // Store event info in the LHAup object.
+    myLHA.setEvent();
+    // Write out this event info on the file.
+    // With optional argument (verbose =) false the file is smaller.
+    myLHA.eventLHEF();
   }
-  Analysis.End();
+  // Update the cross section info based on Monte Carlo integration during run.
+  myLHA.updateSigma();
+  // Write endtag. Overwrite initialization info with new cross sections.
+  myLHA.closeLHEF(true);
 
   return 0;
 }

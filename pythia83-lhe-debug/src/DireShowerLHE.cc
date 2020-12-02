@@ -35,11 +35,13 @@ int main( int argc, char* argv[] ) {
 
   cout << "Called with nev = " << nev << ", CF = " << CF << ", CA = " << CA << ", kernel order = " << kernelOrder << endl;
 
-  // initialize Pythia and Dire
+  // initialize Pythia
   Pythia pythia;
   EventHandler Analysis(0.4,20);
 
-  //Pythia settings
+  //Pythia settings not covered in DIRE config file
+  //Use DIRE parton shower
+  pythia.readString("PartonShowers:model = 3");
   // no substructure in e+e- beams
   pythia.readString("PDF:lepton = off");
   // set the quark casimir value
@@ -53,15 +55,23 @@ int main( int argc, char* argv[] ) {
   //Messing with the splitting functions
   pythia.readString("DireTimes:doGeneralizedKernel = on");
 
-  //Read config file(s) with additional settings (processes, tweaked kernels, etc)
+  //Read config file(s)
   for (int j = 0; j < configs.size(); j++) {
     cout << "reading config file : " << configs[j] << endl;
     pythia.readFile(configs[j]);
   }
 
-  pythia.settings.writeFile("run_settings.txt",true);
+  pythia.init();
+
+  //Have to read config again to get pythia to "remember" some settings after init
+  //e.g. init will set alphaSorder = 2 no matter what you tell it before init
+  for (int j = 0; j < configs.size(); j++) {
+    pythia.readFile(configs[j]);
+  }
 
   pythia.init();
+
+  pythia.settings.writeFile("run_settings.txt",true);
 
   cout << "---------------------------STARTING EVENT GEN--------------------------- \n \n \n" << endl;
 
