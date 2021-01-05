@@ -22,13 +22,15 @@ def train_qg_pfn(fname_q,fname_g):
     qjet_phi = f_q.array("plead_constit_phi")
 
     #remove events where there is no leading quark or gluon jet for some reason
-    gjet_pt = gjet_pt[np.count_nonzero(gjet_pt,axis=1) > 0]
-    gjet_eta = gjet_eta[np.count_nonzero(gjet_eta,axis=1) > 0]
-    gjet_phi = gjet_phi[np.count_nonzero(gjet_phi,axis=1) > 0]
+    g_mask = np.count_nonzero(gjet_pt,axis=1) > 0
+    gjet_pt = gjet_pt[g_mask]
+    gjet_eta = gjet_eta[g_mask]
+    gjet_phi = gjet_phi[g_mask]
 
-    qjet_pt = qjet_pt[np.count_nonzero(qjet_pt,axis=1) > 0]
-    qjet_eta = qjet_eta[np.count_nonzero(qjet_eta,axis=1) > 0]
-    qjet_phi = qjet_phi[np.count_nonzero(qjet_phi,axis=1) > 0]
+    q_mask = np.count_nonzero(qjet_pt,axis=1) > 0
+    qjet_pt = qjet_pt[q_mask]
+    qjet_eta = qjet_eta[q_mask]
+    qjet_phi = qjet_phi[q_mask]
 
     #get size of constituent pt/eta/phi arrays; set to 100 in MC generation (more than needed) and padded with zeros
     pad_size = np.size(qjet_pt,axis=1)
