@@ -1,0 +1,10 @@
+\contentsline {section}{\numberline {1}Introduction}{1}{section.1}
+\contentsline {section}{\numberline {2}The Structure of Quark and Gluon Jets}{2}{section.2}
+\contentsline {section}{\numberline {3}Quark and Gluon Jet Likelihoods}{4}{section.3}
+\contentsline {subsection}{\numberline {3.1}Analysis in the Eikonal Limit}{4}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Beyond Eikonal}{6}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Perturbative multiplicity and parton showers}{10}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}Bla: A new observable for Quark vs. Gluon Tagging}{11}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.5}Discussion and Extensions}{11}{subsection.3.5}
+\contentsline {section}{\numberline {4}Monte Carlo Study}{11}{section.4}
+\contentsline {section}{\numberline {5}Conclusions}{12}{section.5}

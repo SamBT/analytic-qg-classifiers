@@ -7,13 +7,12 @@ cfg=$4
 
 date
 pythdir=/global/project/projectdirs/atlas/sambt/pythia83-output/optimal-classifiers
-mkdir ${pythdir}/${proc}
 
-mkdir ${pythdir}/${proc}/kernel${kern}
-mkdir ${pythdir}/${proc}/kernel${kern}/${name}
-rm -rf ${pythdir}/${proc}/kernel${kern}/${name}/output_${j}
-mkdir ${pythdir}/${proc}/kernel${kern}/${name}/output_${j}
-cd ${pythdir}/${proc}/kernel${kern}/${name}/output_${j}
+mkdir ${pythdir}/kernel${kern}
+mkdir ${pythdir}/kernel${kern}/${name}
+rm -rf ${pythdir}/kernel${kern}/${name}/output_${j}
+mkdir ${pythdir}/kernel${kern}/${name}/output_${j}
+cd ${pythdir}/kernel${kern}/${name}/output_${j}
 
 module load root
 

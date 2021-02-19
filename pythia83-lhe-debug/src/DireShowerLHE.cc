@@ -18,6 +18,7 @@ int main( int argc, char* argv[] ) {
   int nev;
   double CF, CA;
   int kernelOrder;
+  int nfMax;
   string inFile;
   vector<string> configs;
 
@@ -29,12 +30,13 @@ int main( int argc, char* argv[] ) {
     ("kernel,k",po::value<int>(&kernelOrder)->default_value(1),"kernel order")
     ("input,i",po::value<string>(&inFile),"input LHE file")
     ("config,c",po::value< vector<string> >(&configs),"input config files")
+    ("nf",po::value<int>(&nfMax)->default_value(0),"max number of final particles in PS")
     ;
   po::variables_map vm;
   po::store(po::parse_command_line(argc, argv, desc), vm);
   po::notify(vm);
 
-  cout << "Called with nev = " << nev << ", CF = " << CF << ", CA = " << CA << ", kernel order = " << kernelOrder << endl;
+  cout << "Called with nev = " << nev << ", CF = " << CF << ", CA = " << CA << ", kernel order = " << kernelOrder << ", nfMax = " << nfMax << endl;
 
   // initialize Pythia
   Pythia pythia;
@@ -55,6 +57,10 @@ int main( int argc, char* argv[] ) {
   pythia.readString("HadronLevel:all = off");
   //Messing with the splitting functions
   pythia.readString("DireTimes:doGeneralizedKernel = on");
+  //Set number of final state particles if desired
+  if (nfMax != 0) {
+    pythia.settings.mode("DireTimes:nFinalMax",nfMax);
+  }
 
   for (int j = 0; j < configs.size(); j++) {
     pythia.readFile(configs[j]);
@@ -63,6 +69,7 @@ int main( int argc, char* argv[] ) {
   pythia.readString("Beams:frameType = 4");
   string lhe = "Beams:LHEF = ";
   lhe += inFile;
+  pythia.readString(lhe);
 
   pythia.init();
 

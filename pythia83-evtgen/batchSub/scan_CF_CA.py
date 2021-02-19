@@ -1,4 +1,5 @@
 import subprocess
+
 import sys
 
 name = str(sys.argv[1])
@@ -25,7 +26,7 @@ for CF in CFs:
         print("config string : "+cfg_str)
             
         for i in range(1,njobs+1):
-            command = ["sbatch","-C","haswell","-q","regular","-t","15","run_job.sh",name+"-CF{0:.1f}CA{1:.1f}".format(CF,CA),str(i),str(kernel),cfg_str]
+            command = ["sbatch","-C","haswell","-q","regular","-t","10","run_job.sh",name+"-CF{0:.1f}CA{1:.1f}".format(CF,CA),str(i),str(kernel),cfg_str]
             subprocess.run(command)
         print("****************************************")
             
