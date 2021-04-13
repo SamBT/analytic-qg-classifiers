@@ -1,7 +1,0 @@
-DireTimes:KernelOrder = 0
-DireTimes:pTrecombine = 0.0
-DireTimes:useBackboneGluons = on
-
-# switch off event generation steps
-HadronLevel:all = off
-PartonLevel:ISR = off

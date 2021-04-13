@@ -1,3 +1,0 @@
-pythia8->readString("DireTimes:kernelOrder = -1"); 
-pythia8->readString("DireColorQCD:CA = 3."); 
-pythia8->readString("DireColorQCD:CF = 3."); 
