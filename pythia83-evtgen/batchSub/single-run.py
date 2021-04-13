@@ -20,7 +20,7 @@ for c in configs:
     cfg_str += " -c "+config_dir+c+".cmnd"
 print("config string : "+cfg_str)
 for i in range(1,njobs+1):
-    command = ["sbatch","-C","haswell","-q","regular","-t","15","run_job.sh",name,str(i),str(kernel),cfg_str]
+    command = ["sbatch","run_job_v3.sh",name,str(i),str(kernel),cfg_str]
     subprocess.run(command)
 
             
