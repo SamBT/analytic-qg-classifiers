@@ -1,0 +1,11 @@
+Minimum Energy Fraction
+CA
+NF
+CF
+Minimum Invariant Mass Scale
+N, the Number of Jet Radii
+Jet Radius 1 (The largest, less than PI/2)
+Jet Radius 2 (Next largest)
+Jet Radius 3 (Third largest)
+...
+Jet Radius N (Nth largest)

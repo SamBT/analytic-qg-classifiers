@@ -1,0 +1,7 @@
+#!/bin/bash
+
+module load gsl
+
+gcc -o ./Parton_Shower_Lib.o -c ./Parton_Shower_Lib.c $GSL -w -lm -lgsl -lgslcblas
+
+gcc ./DGLAP_MC_CLASSICAL.c Parton_Shower_Lib.o -w -o ./Test/DGLAP_Shower $GSL -lm -lgsl -lgslcblas
