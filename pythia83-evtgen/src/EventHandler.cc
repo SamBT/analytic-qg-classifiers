@@ -40,23 +40,22 @@ void EventHandler::AnalyzeEvent(int iEvt, Pythia8::Pythia& pyth) {
   vector<fastjet::PseudoJet> particlesForJets; //particle list for final-state jets
   vector<fastjet::PseudoJet> partonsForJets; //parton list for "truth"/parton jets
 
-  //Loop over particles in event and store the final state particles and final (pre-hadronization) state partons
+  //Loop over particles in event and store the final state partons
   for (int i = 0; i < pyth.event.size(); i++) {
     Pythia8::Particle part = pyth.event[i];
     int id = part.id();
     int idAbs = part.idAbs();
+    
+    //Skip non final-state particles and/or neutrinos
+    if (!part.isFinal() || idAbs == 12 || idAbs == 14 || idAbs == 16) continue;
+
     fastjet::PseudoJet p(part.px(), part.py(), part.pz(), part.e());
     p.set_user_index(id);
 
-    //Skip non final-state particles and/or neutrinos
-    if (!part.isFinal() && !part.isFinalPartonLevel()) continue;
-    if (idAbs == 12 || idAbs == 14 || idAbs == 16) continue;
-
     //Keep final-state partons for jet clustering
-    if (part.isFinal()) {
-      particlesForJets.push_back(p);
-    }
+    particlesForJets.push_back(p);
   } //End particle loop
+  EventPartonMult = particlesForJets.size();
 
   //Finding regular + parton jets
   fastjet::ClusterSequence cs(particlesForJets,*m_jet_def);
@@ -92,6 +91,7 @@ void EventHandler::DeclareBranches() {
   T->Branch("EventNumber",&EventNumber,"EventNumber/I");
   T->Branch("pTmin",&pTmin,"pTmin/D");
   T->Branch("jetRadius",&jet_radius,"jet_radius/D");
+  T->Branch("eventPartonMult",&EventPartonMult,"EventPartonMult/I");
 
   //Regular jets
   T->Branch("nJets",&njets,"njets/I");
@@ -102,11 +102,11 @@ void EventHandler::DeclareBranches() {
   T->Branch("jet_m",&jet_m,"jet_m[njets]/D");
   T->Branch("jet_mult",&jet_mult,"jet_mult[njets]/I");
   
-  T->Branch("lead_constit_pt",&lead_constit_pt,"plead_constit_pt[50]/D");
-  T->Branch("lead_constit_eta",&lead_constit_eta,"plead_constit_eta[50]/D");
-  T->Branch("lead_constit_phi",&lead_constit_phi,"plead_constit_phi[50]/D");
-  T->Branch("lead_constit_e",&lead_constit_e,"plead_constit_e[50]/D");
-  T->Branch("lead_constit_id",&lead_constit_id,"plead_constit_id[50]/I");
+  T->Branch("lead_constit_pt",&lead_constit_pt,"plead_constit_pt[200]/D");
+  T->Branch("lead_constit_eta",&lead_constit_eta,"plead_constit_eta[200]/D");
+  T->Branch("lead_constit_phi",&lead_constit_phi,"plead_constit_phi[200]/D");
+  T->Branch("lead_constit_e",&lead_constit_e,"plead_constit_e[200]/D");
+  T->Branch("lead_constit_id",&lead_constit_id,"plead_constit_id[200]/I");
 
   T->GetListOfBranches()->ls();
 
@@ -118,6 +118,7 @@ void EventHandler::ResetBranches() {
 
   nJetsFilled = 0;
   njets = 0;
+  EventPartonMult = 0;
 
   for (int i = 0; i < max_njets; i++) {
     jet_pt[i] = -999;
@@ -127,7 +128,7 @@ void EventHandler::ResetBranches() {
     jet_mult[i] = -999;
   }
 
-  for (int i = 0; i < 50; i++) {
+  for (int i = 0; i < 200; i++) {
     lead_constit_pt[i] = 0;
     lead_constit_eta[i] = 0;
     lead_constit_phi[i] = 0;

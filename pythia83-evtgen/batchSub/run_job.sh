@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -A m3246
+#SBATCH -A m3705
 #SBATCH -q shared
 #SBATCH -t 00:30:00
 #SBATCH -C haswell
@@ -26,7 +26,9 @@ tstart=`date +%s`
 
 cd ${pythdir}/kernel${kern}/${name}/output_${j}
 
-srun ./GenEvts $cfg
+echo "called as ./GenEvts ${cfg}"
+
+./GenEvts $cfg
 
 mv test.root ${pythdir}/${proc}/kernel${kern}/${name}/output_${j}.root
 cd ${pythdir}/${proc}/kernel${kern}/${name}

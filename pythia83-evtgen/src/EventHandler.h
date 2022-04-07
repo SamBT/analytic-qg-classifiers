@@ -46,6 +46,8 @@ class EventHandler {
     int nQJetsFilled;
     int nGJetsFilled;
 
+    int EventPartonMult;
+
     int njets;
     double jet_pt[max_njets];
     double jet_eta[max_njets];
@@ -53,11 +55,11 @@ class EventHandler {
     double jet_m[max_njets];
     int jet_mult[max_njets];
 
-    double lead_constit_pt[50];
-    double lead_constit_eta[50];
-    double lead_constit_phi[50];
-    double lead_constit_e[50];
-    int lead_constit_id[50];
+    double lead_constit_pt[200];
+    double lead_constit_eta[200];
+    double lead_constit_phi[200];
+    double lead_constit_e[200];
+    int lead_constit_id[200];
 
     //Fastjet objects
     fastjet::JetDefinition *m_jet_def; //Regular anti-kT jets

@@ -1,0 +1,15 @@
+#!/bin/bash
+
+
+#The args are RandomSeed NumberOfEvents JetEnergy InitialJetRadius Flavor ProgramMode
+#Flavor is an integer, 0 being a gluon, 1 being a quark
+#ProgramMode is an integer, 0 is no threshold corrections
+#1 is with threshold corrections
+
+./DGLAP_Shower 101 4000000 91 1.5708 1 0 &
+./DGLAP_Shower 101 4000000 91 1.5708 0 0 &
+
+wait
+
+./DGLAP_Shower 102 4000000 91 1.5708 1 0 &
+./DGLAP_Shower 102 4000000 91 1.5708 0 0 
